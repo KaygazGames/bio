@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kağan</title>
+
+<style>
+:root {
+  --bg: #ffffff;
+  --text: #111;
+  --muted: #666;
+  --border: #e5e5e5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* Layout */
+.container {
+  max-width: 720px;
+  margin: auto;
+  padding: 60px 20px;
+}
+
+/* Header */
+h1 {
+  font-size: 2.8rem;
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+.subtitle {
+  margin-top: 5px;
+  color: var(--muted);
+}
+
+/* Sections */
+.section {
+  margin-top: 50px;
+}
+
+.section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 30px 0;
+}
+
+/* Links */
+.links a {
+  display: inline-block;
+  margin-right: 15px;
+  text-decoration: none;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2px;
+  transition: 0.2s;
+}
+
+.links a:hover {
+  opacity: 0.6;
+}
+
+/* Form */
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button {
+  margin-top: 10px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #111;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.2s;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+/* Status */
+#status {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* Footer */
+footer {
+  margin-top: 60px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Subtle fade-in */
+.fade {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.fade:nth-child(2) { animation-delay: 0.1s; }
+.fade:nth-child(3) { animation-delay: 0.2s; }
+.fade:nth-child(4) { animation-delay: 0.3s; }
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="fade">
+    <h1>Kağan</h1>
+    <div class="subtitle">Gömülü Sistemler • Oyun Geliştirme</div>
+  </div>
+
+  <div class="section fade">
+    <p>
+      ESP32, Raspberry Pi Pico W ve web tabanlı sistemler geliştiriyorum.
+      Performans, sadelik ve işlevsellik odaklı çalışıyorum.
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section links fade">
+    <h3>Bağlantılar</h3>
+    <a href="https://github.com/kaygazgames" target="_blank">GitHub</a>
+    <a href="https://youtube.com/@KANALIN" target="_blank">YouTube</a>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section fade">
+    <h3>Soru Bırak</h3>
+
+    <input id="name" placeholder="İsim (opsiyonel)">
+    <textarea id="question" rows="4" placeholder="Sorunuzu yazın..."></textarea>
+
+    <button onclick="sendQuestion()">Gönder</button>
+    <div id="status"></div>
+  </div>
+
+  <footer class="fade">
+    © 2026 Kağan
+  </footer>
+
+</div>
+
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBVadlDasPqDxNrGIRJj5iRJ5Timfy41HE",
+  authDomain: "biography-kagan362.firebaseapp.com",
+  projectId: "biography-kagan362",
+  storageBucket: "biography-kagan362.firebasestorage.app",
+  messagingSenderId: "755759075819",
+  appId: "1:755759075819:web:124ccd94b5b8ff1e5049ae",
+  measurementId: "G-K0NBSJDVFG"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.sendQuestion = async function () {
+  const name = document.getElementById("name").value;
+  const question = document.getElementById("question").value;
+  const status = document.getElementById("status");
+
+  if (!question.trim()) {
+    status.textContent = "Soru boş olamaz.";
+    return;
+  }
+
+  status.textContent = "Gönderiliyor...";
+
+  try {
+    await addDoc(collection(db, "questions"), {
+      name: name || "Anonim",
+      question: question,
+      createdAt: new Date()
+    });
+
+    status.textContent = "Gönderildi ✔";
+    document.getElementById("name").value = "";
+    document.getElementById("question").value = "";
+  } catch (e) {
+    status.textContent = "Hata oluştu ❌";
+  }
+};
+</script>
+
+</body>
+</html>
