@@ -1,1 +1,215 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Kağan | Portfolio</title>
+
+<style>
+:root {
+  --bg: #ffffff;
+  --text: #111;
+  --muted: #666;
+  --border: #e5e5e5;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 60px 20px;
+}
+
+/* Header */
+h1 {
+  font-size: 2.8rem;
+  margin: 0;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+/* Sections */
+.section {
+  margin-top: 50px;
+}
+
+/* Project Card */
+.project {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.project:hover {
+  transform: translateY(-4px);
+}
+
+.project h3 {
+  margin: 0;
+}
+
+/* Tags */
+.tags {
+  margin-top: 10px;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 0.8rem;
+  background: #f3f3f3;
+  padding: 5px 10px;
+  border-radius: 8px;
+  margin-right: 6px;
+}
+
+/* Expand section */
+.details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  margin-top: 10px;
+}
+
+.project.active .details {
+  max-height: 500px;
+}
+
+/* Links */
+.links a {
+  margin-right: 15px;
+  text-decoration: none;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 40px 0;
+}
+
+/* Footer */
+footer {
+  margin-top: 60px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <h1>Kağan</h1>
+  <div class="subtitle">Gömülü Sistemler • Oyun Geliştirme</div>
+
+  <!-- About -->
+  <div class="section">
+    <p>
+      ESP32, Raspberry Pi Pico W ve web tabanlı sistemler geliştiriyorum.
+      Performans ve sistem tasarımı odaklı projeler üretiyorum.
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Projects -->
+  <div class="section">
+    <h2>Projeler</h2>
+
+    <!-- Project 1 -->
+    <div class="project" onclick="toggle(this)">
+      <h3>Türkos Switch</h3>
+      <div class="tags">
+        <span class="tag">ESP32</span>
+        <span class="tag">OLED</span>
+        <span class="tag">Multiplayer</span>
+      </div>
+
+      <div class="details">
+        <p>
+          Esp32 ve 1.3inch oled ekran ile çalışan çok oyunlu oyun konsolu
+          AI-Multiplayer rakip sistemi ve joystick kontrollü oynanış içerir.
+        </p>
+        <p><b>Öne çıkan:</b> gerçek zamanlı veri iletişimi, düşük latency multiplayer</p>
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project" onclick="toggle(this)">
+      <h3>Hacker Simulator</h3>
+      <div class="tags">
+        <span class="tag">HTML</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">Multiplayer</span>
+      </div>
+
+      <div class="details">
+        <p>
+          Web tabanlı sahte işletim sistemi simülasyonu.
+          Terminal, uygulamalar ve multiplayer etkileşim içerir.
+        </p>
+        <p><b>Öne çıkan:</b> UI simülasyonu, gerçekçi terminal deneyimi</p>
+      </div>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="project" onclick="toggle(this)">
+      <h3>ESP32 BLE Gamepad</h3>
+      <div class="tags">
+        <span class="tag">ESP32</span>
+        <span class="tag">Bluetooth</span>
+        <span class="tag">Embedded</span>
+      </div>
+
+      <div class="details">
+        <p>
+          Kalibre edilmiş joystick ve butonlarla çalışan BLE gamepad.
+        </p>
+        <p><b>Öne çıkan:</b> düşük gecikmeli BLE iletişim</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Links -->
+  <div class="section links">
+    <h3>Bağlantılar</h3>
+    <a href="https://github.com/kaygazgames" target="_blank">GitHub</a>
+    <a href="https://youtube.com/@Enderguy32" target="_blank">YouTube</a>
+  </div>
+
+  <footer>
+    © 2026 Kağan
+  </footer>
+
+</div>
+
+<script>
+function toggle(el) {
+  el.classList.toggle("active");
+}
+</script>
+
+</body>
+</html>
